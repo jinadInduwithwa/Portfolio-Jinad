@@ -10,7 +10,6 @@ function MousePosition() {
     const handleMouseMove = (event: MouseEvent) => {
       setMousePosition({ x: event.clientX, y: event.clientY });
     };
-
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
@@ -47,7 +46,7 @@ interface ParticlesProps {
 
 export const Particles = ({
   className = "",
-  quantity = 100,
+  quantity = 50,
   staticity = 50,
   ease = 50,
   size = 0.4,
@@ -64,21 +63,6 @@ export const Particles = ({
   const mouse = useRef({ x: 0, y: 0 });
   const canvasSize = useRef({ w: 0, h: 0 });
   const dpr = typeof window !== "undefined" ? window.devicePixelRatio : 1;
-
-  useEffect(() => {
-    if (canvasRef.current) {
-      context.current = canvasRef.current.getContext("2d");
-    }
-    initCanvas();
-    window.addEventListener("resize", resizeCanvas);
-    return () => window.removeEventListener("resize", resizeCanvas);
-  }, [color]);
-
-  useEffect(() => {
-    if (refresh) {
-      initCanvas();
-    }
-  }, [refresh]);
 
   const initCanvas = () => {
     resizeCanvas();
@@ -183,6 +167,23 @@ export const Particles = ({
   };
 
   useEffect(() => {
+    if (canvasRef.current) {
+      context.current = canvasRef.current.getContext("2d");
+    }
+    initCanvas();
+    window.addEventListener("resize", resizeCanvas);
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+    };
+  }, [color, initCanvas, resizeCanvas]);
+
+  useEffect(() => {
+    if (refresh) {
+      initCanvas();
+    }
+  }, [refresh, initCanvas]);
+
+  useEffect(() => {
     const handleMouseMove = () => {
       if (canvasRef.current) {
         const rect = canvasRef.current.getBoundingClientRect();
@@ -203,7 +204,7 @@ export const Particles = ({
         window.cancelAnimationFrame(animate as any);
       }
     };
-  }, [mousePosition.x, mousePosition.y]);
+  }, [mousePosition.x, mousePosition.y, animate]);
 
   return (
     <div
