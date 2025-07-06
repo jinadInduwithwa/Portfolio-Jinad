@@ -58,27 +58,24 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="flex flex-col relative items-center c-space section-spacing min-h-screen">
-      <h1 className="text-[40px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500 py-20">
-        Contact Me
-      </h1>
+    <section className="relative flex items-center c-space section-spacing min-h-screen">
       <Particles
         className="absolute inset-0 -z-50"
-        quantity={50} // Reduced for mobile performance
+        quantity={50}
         ease={80}
         color="#ffffff"
         refresh
       />
       {showAlert && <Alert type={alertType} text={alertMessage} />}
-      <div className="flex flex-col items-center justify-center w-full max-w-md p-5 mx-auto border border-white/10 rounded-2xl">
+      <div className="flex flex-col items-center justify-center w-full max-w-md p-5 mx-auto border border-white/10 rounded-2xl bg-primary">
         <div className="flex flex-col items-start w-full gap-5 mb-10">
-          <h2 className="text-heading">Let's Talk</h2>
+          <h2 className="text-heading">Let&apos;s Talk</h2>
           <p className="font-normal text-neutral-400">
-            Whether you're looking to build a new website, improve your existing
-            platform, or bring a unique project to life, I'm here to help
+            Whether you&apos;re looking to build a new website, improve your existing
+            platform, or bring a unique project to life, I&apos;m here to help
           </p>
         </div>
-        <form className="w-full space-y-5" onSubmit={handleSubmit}>
+        <form className="w-full space-y-5" onSubmit={handleSubmit} aria-label="Contact form">
           <div>
             <label htmlFor="name" className="field-label">
               Full Name
